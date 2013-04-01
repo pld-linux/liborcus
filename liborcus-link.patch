@@ -1,0 +1,32 @@
+--- liborcus_0.3.0/src/Makefile.am.orig	2012-11-28 13:21:10.000000000 +0100
++++ liborcus_0.3.0/src/Makefile.am	2013-04-01 09:25:19.181843438 +0200
+@@ -22,7 +22,8 @@
+ 	dom_tree_sax_handler.cpp
+ 
+ orcus_xml_dump_LDADD = \
+-	liborcus/liborcus-@ORCUS_API_VERSION@.la
++	liborcus/liborcus-@ORCUS_API_VERSION@.la \
++	-lpthread
+ 
+ orcus_xml_dump_CPPFLAGS = -I$(top_builddir)/lib/liborcus/liborcus.la $(COMMON_CPPFLAGS)
+ 
+@@ -78,7 +79,8 @@
+ 
+ orcus_xml_LDADD = \
+ 	liborcus/liborcus-@ORCUS_API_VERSION@.la \
+-	spreadsheet/liborcus-spreadsheet-model-@ORCUS_API_VERSION@.la
++	spreadsheet/liborcus-spreadsheet-model-@ORCUS_API_VERSION@.la \
++	-lpthread
+ 
+ orcus_xml_CPPFLAGS = -I$(top_builddir)/lib/liborcus/liborcus.la $(COMMON_CPPFLAGS)
+ 
+--- liborcus_0.3.0/src/spreadsheet/Makefile.am.orig	2012-11-28 13:21:10.000000000 +0100
++++ liborcus_0.3.0/src/spreadsheet/Makefile.am	2013-04-01 07:28:42.121989280 +0200
+@@ -17,6 +17,6 @@
+ 
+ liborcus_spreadsheet_model_@ORCUS_API_VERSION@_la_CXXFLAGS = $(LIBIXION_CFLAGS)
+ liborcus_spreadsheet_model_@ORCUS_API_VERSION@_la_LDFLAGS = -no-undefined
+-liborcus_spreadsheet_model_@ORCUS_API_VERSION@_la_LIBADD = $(LIBIXION_LIBS)
++liborcus_spreadsheet_model_@ORCUS_API_VERSION@_la_LIBADD = $(LIBIXION_LIBS) $(top_builddir)/src/liborcus/liborcus-@ORCUS_API_VERSION@.la
+ 
+ endif

@@ -1,7 +1,6 @@
-# TODO: ixion (requires newer version than existing in PLD)
 #
 # Conditional build:
-%bcond_with	ixion		# ixion-based spreadsheet model support
+%bcond_without	ixion		# ixion-based spreadsheet model support
 %bcond_without	libzip		# ZIP-based formats support via libzip
 %bcond_without	static_libs	# static library
 #
@@ -9,15 +8,20 @@ Summary:	Standalone file import filter library for spreadsheet documents
 Summary(pl.UTF-8):	Biblioteka samodzielnego filtra importującego pliki dla arkuszy kalkulacyjnych
 Name:		liborcus
 Version:	0.3.0
-Release:	1
+Release:	2
 License:	MIT
 Group:		Libraries
 Source0:	http://kohei.us/files/orcus/src/%{name}_%{version}.tar.bz2
 # Source0-md5:	8755aac23317494a9028569374dc87b2
+Patch0:		%{name}-link.patch
+Patch1:		%{name}-am.patch
 URL:		http://gitorious.org/orcus
+BuildRequires:	autoconf >= 2.65
+BuildRequires:	automake >= 1:1.11
 BuildRequires:	boost-devel
-%{?with_ixion:BuildRequires:	ixion-devel >= 0.6}
+%{?with_ixion:BuildRequires:	ixion-devel >= 0.5}
 BuildRequires:	libstdc++-devel
+BuildRequires:	libtool >= 2:1.5
 %{?with_libzip:BuildRequires:	libzip-devel}
 BuildRequires:	mdds-devel
 BuildRequires:	pkgconfig >= 1:0.20
@@ -62,10 +66,56 @@ Static liborcus library.
 %description static -l pl.UTF-8
 Statyczna biblioteka liborcus.
 
+%package spreadsheet
+Summary:	liborcus spreadsheet model library
+Summary(pl.UTF-8):	Biblioteka liborcus spreadsheet model
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	ixion >= 0.5
+
+%description spreadsheet
+liborcus spreadsheet model library.
+
+%description spreadsheet -l pl.UTF-8
+Biblioteka liborcus spreadsheet model (modelu arkuszy kalkulacyjnych).
+
+%package spreadsheet-devel
+Summary:	Development files for liborcus spreadsheet model library
+Summary(pl.UTF-8):	Pliki programistyczne biblioteki liborcus spreadsheet model
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-spreadsheet = %{version}-%{release}
+Requires:	ixion-devel >= 0.5
+
+%description spreadsheet-devel
+Development files for liborcus spreadsheet model library.
+
+%description spreadsheet-devel -l pl.UTF-8
+Pliki programistyczne biblioteki liborcus spreadsheet model.
+
+%package spreadsheet-static
+Summary:	Static liborcus spreadsheet model library
+Summary(pl.UTF-8):	Biblioteka statyczna liborcus spreadsheet model
+Group:		Development/Libraries
+Requires:	%{name}-spreadsheet-devel = %{version}-%{release}
+
+%description spreadsheet-static
+Static liborcus spreadsheet model library.
+
+%description spreadsheet-static -l pl.UTF-8
+Biblioteka statyczna liborcus spreadsheet model.
+
 %prep
 %setup -q -n %{name}_%{version}
+%patch0 -p1
+%patch1 -p1
 
 %build
+%{__libtoolize}
+%{__aclocal} -I m4
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure \
 	--disable-debug \
 	--disable-silent-rules \
@@ -92,6 +142,9 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
+%post	spreadsheet -p /sbin/ldconfig
+%postun	spreadsheet -p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS
@@ -108,5 +161,26 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
-%endif
 %{_libdir}/liborcus-0.4.a
+%endif
+
+%if %{with ixion}
+%files spreadsheet
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/orcus-csv
+%attr(755,root,root) %{_bindir}/orcus-gnumeric
+%attr(755,root,root) %{_bindir}/orcus-ods
+%attr(755,root,root) %{_bindir}/orcus-xlsx
+%attr(755,root,root) %{_bindir}/orcus-xml
+%attr(755,root,root) %{_libdir}/liborcus-spreadsheet-model-0.4.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/liborcus-spreadsheet-model-0.4.so.0
+
+%files spreadsheet-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/liborcus-spreadsheet-model-0.4.so
+%{_pkgconfigdir}/liborcus-spreadsheet-model-0.4.pc
+
+%files spreadsheet-static
+%defattr(644,root,root,755)
+%{_libdir}/liborcus-spreadsheet-model-0.4.a
+%endif
