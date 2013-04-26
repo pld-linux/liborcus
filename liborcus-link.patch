@@ -1,19 +1,19 @@
---- liborcus_0.3.0/src/Makefile.am.orig	2012-11-28 13:21:10.000000000 +0100
-+++ liborcus_0.3.0/src/Makefile.am	2013-04-01 09:25:19.181843438 +0200
-@@ -22,7 +22,8 @@
- 	dom_tree_sax_handler.cpp
+--- liborcus-0.5.1/src/Makefile.am.orig	2013-03-25 01:18:18.000000000 +0100
++++ liborcus-0.5.1/src/Makefile.am	2013-04-26 15:24:37.638182274 +0200
+@@ -36,7 +36,8 @@
  
  orcus_xml_dump_LDADD = \
+ 	parser/liborcus-parser-@ORCUS_API_VERSION@.la \
 -	liborcus/liborcus-@ORCUS_API_VERSION@.la
 +	liborcus/liborcus-@ORCUS_API_VERSION@.la \
 +	-lpthread
  
  orcus_xml_dump_CPPFLAGS = -I$(top_builddir)/lib/liborcus/liborcus.la $(COMMON_CPPFLAGS)
  
-@@ -78,7 +79,8 @@
- 
+@@ -110,7 +111,8 @@
  orcus_xml_LDADD = \
  	liborcus/liborcus-@ORCUS_API_VERSION@.la \
+ 	parser/liborcus-parser-@ORCUS_API_VERSION@.la \
 -	spreadsheet/liborcus-spreadsheet-model-@ORCUS_API_VERSION@.la
 +	spreadsheet/liborcus-spreadsheet-model-@ORCUS_API_VERSION@.la \
 +	-lpthread
@@ -30,3 +30,23 @@
 +liborcus_spreadsheet_model_@ORCUS_API_VERSION@_la_LIBADD = $(LIBIXION_LIBS) $(top_builddir)/src/liborcus/liborcus-@ORCUS_API_VERSION@.la
  
  endif
+--- liborcus-0.5.1/src/parser/Makefile.am.orig	2013-04-12 16:25:03.000000000 +0200
++++ liborcus-0.5.1/src/parser/Makefile.am	2013-04-26 15:43:10.978135549 +0200
+@@ -20,6 +20,7 @@
+ 
+ liborcus_parser_@ORCUS_API_VERSION@_la_LDFLAGS = -no-undefined
+ liborcus_parser_@ORCUS_API_VERSION@_la_LIBADD = \
++	$(BOOST_SYSTEM_LIB) \
+ 	 $(ZLIB_LIBS)
+ 
+ EXTRA_PROGRAMS = \
+--- liborcus-0.5.1/src/liborcus/Makefile.am.orig	2013-04-12 16:24:50.000000000 +0200
++++ liborcus-0.5.1/src/liborcus/Makefile.am	2013-04-26 16:53:18.567958975 +0200
+@@ -175,6 +175,7 @@
+ 	$(BOOST_SYSTEM_CFLAGS) $(ZLIB_CFLAGS)
+ liborcus_@ORCUS_API_VERSION@_la_LDFLAGS = -no-undefined
+ liborcus_@ORCUS_API_VERSION@_la_LIBADD = \
++	$(top_builddir)/src/parser/liborcus-parser-@ORCUS_API_VERSION@.la \
+ 	 $(BOOST_SYSTEM_LIBS) $(BOOST_SYSTEM_LIB) $(ZLIB_LIBS)
+ 
+ # liborcus-test-xml-map-tree

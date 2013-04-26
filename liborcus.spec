@@ -7,12 +7,13 @@
 Summary:	Standalone file import filter library for spreadsheet documents
 Summary(pl.UTF-8):	Biblioteka samodzielnego filtra importującego pliki dla arkuszy kalkulacyjnych
 Name:		liborcus
-Version:	0.3.0
-Release:	2
+Version:	0.5.1
+Release:	1
 License:	MIT
 Group:		Libraries
-Source0:	http://kohei.us/files/orcus/src/%{name}_%{version}.tar.bz2
-# Source0-md5:	8755aac23317494a9028569374dc87b2
+#Source0Download: http://gitorious.org/orcus/pages/Download
+Source0:	http://kohei.us/files/orcus/src/%{name}-%{version}.tar.bz2
+# Source0-md5:	ea2acaf140ae40a87a952caa75184f4d
 Patch0:		%{name}-link.patch
 Patch1:		%{name}-am.patch
 URL:		http://gitorious.org/orcus
@@ -106,7 +107,7 @@ Static liborcus spreadsheet model library.
 Biblioteka statyczna liborcus spreadsheet model.
 
 %prep
-%setup -q -n %{name}_%{version}
+%setup -q
 %patch0 -p1
 %patch1 -p1
 
@@ -148,20 +149,30 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS
+%attr(755,root,root) %{_bindir}/orcus-mso-encryption
 %attr(755,root,root) %{_bindir}/orcus-xml-dump
-%attr(755,root,root) %{_libdir}/liborcus-0.4.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liborcus-0.4.so.0
+%attr(755,root,root) %{_bindir}/orcus-zip-dump
+%attr(755,root,root) %{_libdir}/liborcus-0.6.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/liborcus-0.6.so.0
+%attr(755,root,root) %{_libdir}/liborcus-mso-0.6.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/liborcus-mso-0.6.so.0
+%attr(755,root,root) %{_libdir}/liborcus-parser-0.6.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/liborcus-parser-0.6.so.0
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/liborcus-0.4.so
-%{_includedir}/liborcus-0.4
-%{_pkgconfigdir}/liborcus-0.4.pc
+%attr(755,root,root) %{_libdir}/liborcus-0.6.so
+%attr(755,root,root) %{_libdir}/liborcus-mso-0.6.so
+%attr(755,root,root) %{_libdir}/liborcus-parser-0.6.so
+%{_includedir}/liborcus-0.6
+%{_pkgconfigdir}/liborcus-0.6.pc
 
 %if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/liborcus-0.4.a
+%{_libdir}/liborcus-0.6.a
+%{_libdir}/liborcus-mso-0.6.a
+%{_libdir}/liborcus-parser-0.6.a
 %endif
 
 %if %{with ixion}
@@ -172,15 +183,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/orcus-ods
 %attr(755,root,root) %{_bindir}/orcus-xlsx
 %attr(755,root,root) %{_bindir}/orcus-xml
-%attr(755,root,root) %{_libdir}/liborcus-spreadsheet-model-0.4.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liborcus-spreadsheet-model-0.4.so.0
+%attr(755,root,root) %{_libdir}/liborcus-spreadsheet-model-0.6.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/liborcus-spreadsheet-model-0.6.so.0
 
 %files spreadsheet-devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/liborcus-spreadsheet-model-0.4.so
-%{_pkgconfigdir}/liborcus-spreadsheet-model-0.4.pc
+%attr(755,root,root) %{_libdir}/liborcus-spreadsheet-model-0.6.so
+%{_pkgconfigdir}/liborcus-spreadsheet-model-0.6.pc
 
 %files spreadsheet-static
 %defattr(644,root,root,755)
-%{_libdir}/liborcus-spreadsheet-model-0.4.a
+%{_libdir}/liborcus-spreadsheet-model-0.6.a
 %endif
