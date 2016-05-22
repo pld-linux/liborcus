@@ -129,6 +129,7 @@ Wiązanie Pythona 3 do biblioteki liborcus.
 %{__autoheader}
 %{__automake}
 %configure \
+	am_cv_python_pythondir=%{py3_sitescriptdir} \
 	--disable-debug \
 	%{!?with_python:--disable-python} \
 	--disable-silent-rules \
@@ -225,5 +226,5 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{py3_sitedir}/_orcus.so
 %attr(755,root,root) %{py3_sitedir}/_orcus_json.so
-%{py3_sitedir}/orcus
+%{py3_sitescriptdir}/orcus
 %endif
