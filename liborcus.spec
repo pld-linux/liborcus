@@ -8,7 +8,7 @@ Summary:	Standalone file import filter library for spreadsheet documents
 Summary(pl.UTF-8):	Biblioteka samodzielnego filtra importującego pliki dla arkuszy kalkulacyjnych
 Name:		liborcus
 Version:	0.13.4
-Release:	1
+Release:	2
 License:	MPL v2.0
 Group:		Libraries
 #Source0Download: https://gitlab.com/orcus/orcus
