@@ -2,18 +2,19 @@
 # Conditional build:
 %bcond_without	ixion		# ixion-based spreadsheet model support
 %bcond_without	python		# Python 3 binding
+%bcond_without	apidocs		# Sphinx documentation
 %bcond_without	static_libs	# static library
 #
 Summary:	Standalone file import filter library for spreadsheet documents
 Summary(pl.UTF-8):	Biblioteka samodzielnego filtra importującego pliki dla arkuszy kalkulacyjnych
 Name:		liborcus
-Version:	0.14.0
+Version:	0.14.1
 Release:	1
 License:	MPL v2.0
 Group:		Libraries
-#Source0Download: https://gitlab.com/orcus/orcus
+#Source0Download: https://gitlab.com/orcus/orcus/raw/master/README.md
 Source0:	http://kohei.us/files/orcus/src/%{name}-%{version}.tar.xz
-# Source0-md5:	62ce71c8f1f16ccdc81b2dc66c213cff
+# Source0-md5:	d3f56b0eb115a081ee3e1d244f0a8a78
 Patch0:		%{name}-flags.patch
 URL:		https://gitlab.com/orcus/orcus
 BuildRequires:	autoconf >= 2.65
@@ -28,6 +29,12 @@ BuildRequires:	pkgconfig >= 1:0.20
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRequires:	zlib-devel
+%if %{with apidocs}
+BuildRequires:	doxygen
+BuildRequires:	python3-breathe
+BuildRequires:	python3-sphinx_bootstrap_theme
+BuildRequires:	sphinx-pdg-3
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -107,6 +114,17 @@ Static liborcus spreadsheet model library.
 %description spreadsheet-static -l pl.UTF-8
 Biblioteka statyczna liborcus spreadsheet model.
 
+%package apidocs
+Summary:	API documentation for orcus libraries
+Summary(pl.UTF-8):	Dokumentacja API bibliotek orcus
+Group:		Documentation
+
+%description apidocs
+API documentation for orcus libraries.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja API bibliotek orcus.
+
 %package -n python3-orcus
 Summary:	Python 3 binding for liborcus library
 Summary(pl.UTF-8):	Wiązanie Pythona 3 do biblioteki liborcus
@@ -143,6 +161,11 @@ Wiązanie Pythona 3 do biblioteki liborcus.
 
 %{__make}
 
+%if %{with apidocs}
+cd doc
+doxygen doxygen.conf
+sphinx-build-3 -b html . _build
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -223,6 +246,12 @@ rm -rf $RPM_BUILD_ROOT
 %files spreadsheet-static
 %defattr(644,root,root,755)
 %{_libdir}/liborcus-spreadsheet-model-0.14.a
+%endif
+
+%if %{with apidocs}
+%files apidocs
+%defattr(644,root,root,755)
+%doc doc/_build/{_static,cpp,overview,python,*.html,*.js}
 %endif
 
 %if %{with python}
