@@ -9,7 +9,7 @@ Summary:	Standalone file import filter library for spreadsheet documents
 Summary(pl.UTF-8):	Biblioteka samodzielnego filtra importującego pliki dla arkuszy kalkulacyjnych
 Name:		liborcus
 Version:	0.15.3
-Release:	1
+Release:	2
 License:	MPL v2.0
 Group:		Libraries
 #Source0Download: https://gitlab.com/orcus/orcus/raw/master/README.md
@@ -197,7 +197,10 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS CHANGELOG ChangeLog LICENSE README.md
 %attr(755,root,root) %{_bindir}/orcus-css-dump
 %attr(755,root,root) %{_bindir}/orcus-detect
+%if %{without ixion}
+# when building with ixion, orcus-json supports map mode which uses spreadsheet-model library, so it's packaged in -spreadsheet then
 %attr(755,root,root) %{_bindir}/orcus-json
+%endif
 %attr(755,root,root) %{_bindir}/orcus-mso-encryption
 %attr(755,root,root) %{_bindir}/orcus-yaml
 %attr(755,root,root) %{_bindir}/orcus-zip-dump
@@ -229,6 +232,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/orcus-csv
 %attr(755,root,root) %{_bindir}/orcus-gnumeric
+%attr(755,root,root) %{_bindir}/orcus-json
 %attr(755,root,root) %{_bindir}/orcus-styles-ods
 %attr(755,root,root) %{_bindir}/orcus-ods
 %attr(755,root,root) %{_bindir}/orcus-xls-xml
