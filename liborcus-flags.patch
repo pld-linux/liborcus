@@ -1,11 +1,12 @@
---- liborcus-0.12.0/configure.ac.orig	2016-08-20 20:49:07.000000000 +0200
-+++ liborcus-0.12.0/configure.ac	2016-08-30 15:53:13.932267671 +0200
-@@ -112,9 +112,8 @@
+--- liborcus-0.15.3/configure.ac.orig	2019-10-30 18:19:29.732194417 +0100
++++ liborcus-0.15.3/configure.ac	2019-10-30 18:20:45.765115844 +0100
+@@ -109,10 +109,9 @@
  	[enable_debug=no]
  )
  AS_IF([test "x$enable_debug" != "xno"], [
 -	CXXFLAGS="$CXXFLAGS -g -O0 -DMDDS_ASSERT_STRING_MAP"
 +	CXXFLAGS="$CXXFLAGS -g -DMDDS_ASSERT_STRING_MAP"
+         enable_debug_utils=yes
  ], [
 -	CXXFLAGS="$CXXFLAGS -O2"
  	AC_DEFINE([NDEBUG], [], [Disable debugging information])
