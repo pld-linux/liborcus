@@ -246,9 +246,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/liborcus-spreadsheet-model-0.15.so
 %{_pkgconfigdir}/liborcus-spreadsheet-model-0.15.pc
 
+%if %{with static_libs}
 %files spreadsheet-static
 %defattr(644,root,root,755)
 %{_libdir}/liborcus-spreadsheet-model-0.15.a
+%endif
 %endif
 
 %if %{with apidocs}
