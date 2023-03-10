@@ -8,25 +8,30 @@
 Summary:	Standalone file import filter library for spreadsheet documents
 Summary(pl.UTF-8):	Biblioteka samodzielnego filtra importującego pliki dla arkuszy kalkulacyjnych
 Name:		liborcus
-Version:	0.16.1
-Release:	8
+# keep in sync with BuildRequires in libreoffice.spec
+Version:	0.17.2
+Release:	1
 License:	MPL v2.0
 Group:		Libraries
 #Source0Download: https://gitlab.com/orcus/orcus/-/releases
-Source0:	http://kohei.us/files/orcus/src/%{name}-%{version}.tar.xz
-# Source0-md5:	be30a66fa4249e5fea90db2872c5be68
+Source0:	https://kohei.us/files/orcus/src/%{name}-%{version}.tar.xz
+# Source0-md5:	4df3646ca736fa0d04965e25fee4898e
 Patch0:		%{name}-flags.patch
-Patch1:		%{name}-gcc11.patch
 URL:		https://gitlab.com/orcus/orcus
 BuildRequires:	autoconf >= 2.65
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	boost-devel >= 1.36
-%{?with_ixion:BuildRequires:	ixion-devel >= 0.16.0}
-BuildRequires:	libstdc++-devel >= 6:4.7
+%if %{with ixion}
+BuildRequires:	ixion-devel >= 0.17.0
+BuildRequires:	ixion-devel < 0.18
+%endif
+BuildRequires:	libstdc++-devel >= 6:7
 BuildRequires:	libtool >= 2:1.5
-BuildRequires:	mdds-devel >= 1.5.0
+BuildRequires:	mdds-devel >= 2.0.0
+BuildRequires:	mdds-devel < 2.1
 BuildRequires:	pkgconfig >= 1:0.20
 %{?with_python:BuildRequires:	python3-devel >= 1:3.2}
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRequires:	zlib-devel
@@ -55,7 +60,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki liborcus
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	boost-devel >= 1.36
-Requires:	libstdc++-devel >= 6:4.7
+Requires:	libstdc++-devel >= 6:7
 
 %description devel
 This package contains the header files for developing applications
@@ -82,7 +87,7 @@ Summary:	liborcus spreadsheet model library
 Summary(pl.UTF-8):	Biblioteka liborcus spreadsheet model
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	ixion >= 0.16.0
+Requires:	ixion >= 0.17.0
 
 %description spreadsheet
 liborcus spreadsheet model library.
@@ -96,7 +101,7 @@ Summary(pl.UTF-8):	Pliki programistyczne biblioteki liborcus spreadsheet model
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-spreadsheet = %{version}-%{release}
-Requires:	ixion-devel >= 0.16.0
+Requires:	ixion-devel >= 0.17.0
 
 %description spreadsheet-devel
 Development files for liborcus spreadsheet model library.
@@ -120,6 +125,7 @@ Biblioteka statyczna liborcus spreadsheet model.
 Summary:	API documentation for orcus libraries
 Summary(pl.UTF-8):	Dokumentacja API bibliotek orcus
 Group:		Documentation
+BuildArch:	noarch
 
 %description apidocs
 API documentation for orcus libraries.
@@ -143,7 +149,6 @@ Wiązanie Pythona 3 do biblioteki liborcus.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %{__libtoolize}
@@ -207,27 +212,27 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/orcus-mso-encryption
 %attr(755,root,root) %{_bindir}/orcus-yaml
 %attr(755,root,root) %{_bindir}/orcus-zip-dump
-%attr(755,root,root) %{_libdir}/liborcus-0.16.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liborcus-0.16.so.0
-%attr(755,root,root) %{_libdir}/liborcus-mso-0.16.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liborcus-mso-0.16.so.0
-%attr(755,root,root) %{_libdir}/liborcus-parser-0.16.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liborcus-parser-0.16.so.0
+%attr(755,root,root) %{_libdir}/liborcus-0.17.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/liborcus-0.17.so.0
+%attr(755,root,root) %{_libdir}/liborcus-mso-0.17.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/liborcus-mso-0.17.so.0
+%attr(755,root,root) %{_libdir}/liborcus-parser-0.17.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/liborcus-parser-0.17.so.0
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/liborcus-0.16.so
-%attr(755,root,root) %{_libdir}/liborcus-mso-0.16.so
-%attr(755,root,root) %{_libdir}/liborcus-parser-0.16.so
-%{_includedir}/liborcus-0.16
-%{_pkgconfigdir}/liborcus-0.16.pc
+%attr(755,root,root) %{_libdir}/liborcus-0.17.so
+%attr(755,root,root) %{_libdir}/liborcus-mso-0.17.so
+%attr(755,root,root) %{_libdir}/liborcus-parser-0.17.so
+%{_includedir}/liborcus-0.17
+%{_pkgconfigdir}/liborcus-0.17.pc
 
 %if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/liborcus-0.16.a
-%{_libdir}/liborcus-mso-0.16.a
-%{_libdir}/liborcus-parser-0.16.a
+%{_libdir}/liborcus-0.17.a
+%{_libdir}/liborcus-mso-0.17.a
+%{_libdir}/liborcus-parser-0.17.a
 %endif
 
 %if %{with ixion}
@@ -241,18 +246,18 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/orcus-xls-xml
 %attr(755,root,root) %{_bindir}/orcus-xlsx
 %attr(755,root,root) %{_bindir}/orcus-xml
-%attr(755,root,root) %{_libdir}/liborcus-spreadsheet-model-0.16.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liborcus-spreadsheet-model-0.16.so.0
+%attr(755,root,root) %{_libdir}/liborcus-spreadsheet-model-0.17.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/liborcus-spreadsheet-model-0.17.so.0
 
 %files spreadsheet-devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/liborcus-spreadsheet-model-0.16.so
-%{_pkgconfigdir}/liborcus-spreadsheet-model-0.16.pc
+%attr(755,root,root) %{_libdir}/liborcus-spreadsheet-model-0.17.so
+%{_pkgconfigdir}/liborcus-spreadsheet-model-0.17.pc
 
 %if %{with static_libs}
 %files spreadsheet-static
 %defattr(644,root,root,755)
-%{_libdir}/liborcus-spreadsheet-model-0.16.a
+%{_libdir}/liborcus-spreadsheet-model-0.17.a
 %endif
 %endif
 
