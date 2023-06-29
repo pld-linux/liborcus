@@ -17,6 +17,7 @@ Group:		Libraries
 Source0:	https://kohei.us/files/orcus/src/%{name}-%{version}.tar.xz
 # Source0-md5:	4df3646ca736fa0d04965e25fee4898e
 Patch0:		%{name}-flags.patch
+Patch1:		gcc-13.patch
 URL:		https://gitlab.com/orcus/orcus
 BuildRequires:	autoconf >= 2.65
 BuildRequires:	automake >= 1:1.11
@@ -149,6 +150,7 @@ Wiązanie Pythona 3 do biblioteki liborcus.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
