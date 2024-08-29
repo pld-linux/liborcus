@@ -10,13 +10,14 @@ Summary(pl.UTF-8):	Biblioteka samodzielnego filtra importującego pliki dla arku
 Name:		liborcus
 # keep in sync with BuildRequires in libreoffice.spec
 Version:	0.18.1
-Release:	1
+Release:	2
 License:	MPL v2.0
 Group:		Libraries
 #Source0Download: https://gitlab.com/orcus/orcus/-/releases
 Source0:	https://kohei.us/files/orcus/src/%{name}-%{version}.tar.xz
 # Source0-md5:	bcfdf8223bda9b07f802d121a2ff6716
 Patch0:		%{name}-flags.patch
+Patch1:		%{name}-includes.patch
 URL:		https://gitlab.com/orcus/orcus
 BuildRequires:	autoconf >= 2.65
 BuildRequires:	automake >= 1:1.11
@@ -149,6 +150,7 @@ Wiązanie Pythona 3 do biblioteki liborcus.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
