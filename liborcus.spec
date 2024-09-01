@@ -9,26 +9,25 @@ Summary:	Standalone file import filter library for spreadsheet documents
 Summary(pl.UTF-8):	Biblioteka samodzielnego filtra importującego pliki dla arkuszy kalkulacyjnych
 Name:		liborcus
 # keep in sync with BuildRequires in libreoffice.spec
-Version:	0.18.1
-Release:	2
+Version:	0.19.2
+Release:	1
 License:	MPL v2.0
 Group:		Libraries
 #Source0Download: https://gitlab.com/orcus/orcus/-/releases
 Source0:	https://kohei.us/files/orcus/src/%{name}-%{version}.tar.xz
-# Source0-md5:	bcfdf8223bda9b07f802d121a2ff6716
+# Source0-md5:	7360797e8fe50f793ddfa578a6ca3a76
 Patch0:		%{name}-flags.patch
-Patch1:		%{name}-includes.patch
 URL:		https://gitlab.com/orcus/orcus
 BuildRequires:	autoconf >= 2.65
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	boost-devel >= 1.36
 %if %{with ixion}
-BuildRequires:	ixion-devel >= 0.18.0
-BuildRequires:	ixion-devel < 0.19
+BuildRequires:	ixion-devel >= 0.19.0
+BuildRequires:	ixion-devel < 0.20
 %endif
 BuildRequires:	libstdc++-devel >= 6:7
 BuildRequires:	libtool >= 2:1.5
-BuildRequires:	mdds-devel >= 2.1.0
+BuildRequires:	mdds-devel >= 2.1.1
 BuildRequires:	mdds-devel < 2.2
 BuildRequires:	pkgconfig >= 1:0.20
 %{?with_python:BuildRequires:	python3-devel >= 1:3.2}
@@ -150,7 +149,6 @@ Wiązanie Pythona 3 do biblioteki liborcus.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %{__libtoolize}
