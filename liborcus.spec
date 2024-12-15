@@ -10,7 +10,7 @@ Summary(pl.UTF-8):	Biblioteka samodzielnego filtra importującego pliki dla arku
 Name:		liborcus
 # keep in sync with BuildRequires in libreoffice.spec
 Version:	0.19.2
-Release:	1
+Release:	2
 License:	MPL v2.0
 Group:		Libraries
 #Source0Download: https://gitlab.com/orcus/orcus/-/releases
