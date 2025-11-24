@@ -38,8 +38,8 @@ BuildRequires:	zlib-devel
 %if %{with apidocs}
 BuildRequires:	doxygen
 BuildRequires:	python3-breathe
+BuildRequires:	python3-piccolo_theme
 BuildRequires:	python3-sphinx_argparse
-BuildRequires:	python3-sphinx_rtd_theme
 BuildRequires:	sphinx-pdg-3
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -213,17 +213,17 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/orcus-yaml
 %attr(755,root,root) %{_bindir}/orcus-zip-dump
 %attr(755,root,root) %{_libdir}/liborcus-0.20.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liborcus-0.20.so.0
+%ghost %{_libdir}/liborcus-0.20.so.0
 %attr(755,root,root) %{_libdir}/liborcus-mso-0.20.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liborcus-mso-0.20.so.0
+%ghost %{_libdir}/liborcus-mso-0.20.so.0
 %attr(755,root,root) %{_libdir}/liborcus-parser-0.20.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liborcus-parser-0.20.so.0
+%ghost %{_libdir}/liborcus-parser-0.20.so.0
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/liborcus-0.20.so
-%attr(755,root,root) %{_libdir}/liborcus-mso-0.20.so
-%attr(755,root,root) %{_libdir}/liborcus-parser-0.20.so
+%{_libdir}/liborcus-0.20.so
+%{_libdir}/liborcus-mso-0.20.so
+%{_libdir}/liborcus-parser-0.20.so
 %{_includedir}/liborcus-0.20
 %{_pkgconfigdir}/liborcus-0.20.pc
 
@@ -247,11 +247,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/orcus-xlsx
 %attr(755,root,root) %{_bindir}/orcus-xml
 %attr(755,root,root) %{_libdir}/liborcus-spreadsheet-model-0.20.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liborcus-spreadsheet-model-0.20.so.0
+%ghost %{_libdir}/liborcus-spreadsheet-model-0.20.so.0
 
 %files spreadsheet-devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/liborcus-spreadsheet-model-0.20.so
+%{_libdir}/liborcus-spreadsheet-model-0.20.so
 %{_pkgconfigdir}/liborcus-spreadsheet-model-0.20.pc
 
 %if %{with static_libs}
@@ -264,7 +264,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
-%doc doc/_build/{_static,cpp,overview,python,*.html,*.js}
+%doc doc/_build/{_downloads,_images,_static,cli,cpp,notes,overview,python,*.html,*.js}
 %endif
 
 %if %{with python}
