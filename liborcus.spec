@@ -9,26 +9,26 @@ Summary:	Standalone file import filter library for spreadsheet documents
 Summary(pl.UTF-8):	Biblioteka samodzielnego filtra importującego pliki dla arkuszy kalkulacyjnych
 Name:		liborcus
 # keep in sync with BuildRequires in libreoffice.spec
-Version:	0.19.2
-Release:	4
+Version:	0.20.2
+Release:	1
 License:	MPL v2.0
 Group:		Libraries
 #Source0Download: https://gitlab.com/orcus/orcus/-/releases
-Source0:	https://kohei.us/files/orcus/src/%{name}-%{version}.tar.xz
-# Source0-md5:	7360797e8fe50f793ddfa578a6ca3a76
+Source0:	https://gitlab.com/api/v4/projects/orcus%2Forcus/packages/generic/source/%{version}/%{name}-%{version}.tar.xz
+# Source0-md5:	9e770580d57cca1a425a7db102054a1e
 Patch0:		%{name}-flags.patch
 URL:		https://gitlab.com/orcus/orcus
 BuildRequires:	autoconf >= 2.65
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	boost-devel >= 1.36
 %if %{with ixion}
-BuildRequires:	ixion-devel >= 0.19.0
-BuildRequires:	ixion-devel < 0.20
+BuildRequires:	ixion-devel >= 0.20.0
+BuildRequires:	ixion-devel < 0.21
 %endif
 BuildRequires:	libstdc++-devel >= 6:7
 BuildRequires:	libtool >= 2:1.5
-BuildRequires:	mdds-devel >= 2.1.1
-BuildRequires:	mdds-devel < 2.2
+BuildRequires:	mdds-devel >= 3.0.0
+BuildRequires:	mdds-devel < 3.1.0
 BuildRequires:	pkgconfig >= 1:0.20
 %{?with_python:BuildRequires:	python3-devel >= 1:3.2}
 BuildRequires:	rpm-build >= 4.6
@@ -87,7 +87,7 @@ Summary:	liborcus spreadsheet model library
 Summary(pl.UTF-8):	Biblioteka liborcus spreadsheet model
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	ixion >= 0.18.0
+Requires:	ixion >= 0.20.0
 
 %description spreadsheet
 liborcus spreadsheet model library.
@@ -101,7 +101,7 @@ Summary(pl.UTF-8):	Pliki programistyczne biblioteki liborcus spreadsheet model
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	%{name}-spreadsheet = %{version}-%{release}
-Requires:	ixion-devel >= 0.18.0
+Requires:	ixion-devel >= 0.20.0
 
 %description spreadsheet-devel
 Development files for liborcus spreadsheet model library.
@@ -202,7 +202,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS CHANGELOG ChangeLog LICENSE README.md
+%doc AUTHORS CHANGELOG LICENSE README.md
 %attr(755,root,root) %{_bindir}/orcus-css-dump
 %attr(755,root,root) %{_bindir}/orcus-detect
 %if %{without ixion}
@@ -212,27 +212,27 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/orcus-mso-encryption
 %attr(755,root,root) %{_bindir}/orcus-yaml
 %attr(755,root,root) %{_bindir}/orcus-zip-dump
-%attr(755,root,root) %{_libdir}/liborcus-0.18.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liborcus-0.18.so.0
-%attr(755,root,root) %{_libdir}/liborcus-mso-0.18.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liborcus-mso-0.18.so.0
-%attr(755,root,root) %{_libdir}/liborcus-parser-0.18.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liborcus-parser-0.18.so.0
+%attr(755,root,root) %{_libdir}/liborcus-0.20.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/liborcus-0.20.so.0
+%attr(755,root,root) %{_libdir}/liborcus-mso-0.20.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/liborcus-mso-0.20.so.0
+%attr(755,root,root) %{_libdir}/liborcus-parser-0.20.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/liborcus-parser-0.20.so.0
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/liborcus-0.18.so
-%attr(755,root,root) %{_libdir}/liborcus-mso-0.18.so
-%attr(755,root,root) %{_libdir}/liborcus-parser-0.18.so
-%{_includedir}/liborcus-0.18
-%{_pkgconfigdir}/liborcus-0.18.pc
+%attr(755,root,root) %{_libdir}/liborcus-0.20.so
+%attr(755,root,root) %{_libdir}/liborcus-mso-0.20.so
+%attr(755,root,root) %{_libdir}/liborcus-parser-0.20.so
+%{_includedir}/liborcus-0.20
+%{_pkgconfigdir}/liborcus-0.20.pc
 
 %if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/liborcus-0.18.a
-%{_libdir}/liborcus-mso-0.18.a
-%{_libdir}/liborcus-parser-0.18.a
+%{_libdir}/liborcus-0.20.a
+%{_libdir}/liborcus-mso-0.20.a
+%{_libdir}/liborcus-parser-0.20.a
 %endif
 
 %if %{with ixion}
@@ -246,18 +246,18 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/orcus-xls-xml
 %attr(755,root,root) %{_bindir}/orcus-xlsx
 %attr(755,root,root) %{_bindir}/orcus-xml
-%attr(755,root,root) %{_libdir}/liborcus-spreadsheet-model-0.18.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/liborcus-spreadsheet-model-0.18.so.0
+%attr(755,root,root) %{_libdir}/liborcus-spreadsheet-model-0.20.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/liborcus-spreadsheet-model-0.20.so.0
 
 %files spreadsheet-devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/liborcus-spreadsheet-model-0.18.so
-%{_pkgconfigdir}/liborcus-spreadsheet-model-0.18.pc
+%attr(755,root,root) %{_libdir}/liborcus-spreadsheet-model-0.20.so
+%{_pkgconfigdir}/liborcus-spreadsheet-model-0.20.pc
 
 %if %{with static_libs}
 %files spreadsheet-static
 %defattr(644,root,root,755)
-%{_libdir}/liborcus-spreadsheet-model-0.18.a
+%{_libdir}/liborcus-spreadsheet-model-0.20.a
 %endif
 %endif
 
