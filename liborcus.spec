@@ -27,8 +27,9 @@ BuildRequires:	ixion-devel < 0.21
 %endif
 BuildRequires:	libstdc++-devel >= 6:7
 BuildRequires:	libtool >= 2:1.5
+# mdds-3.0 API
 BuildRequires:	mdds-devel >= 3.0.0
-BuildRequires:	mdds-devel < 3.1.0
+BuildRequires:	mdds-devel < 3.3
 BuildRequires:	pkgconfig >= 1:0.20
 %{?with_python:BuildRequires:	python3-devel >= 1:3.2}
 BuildRequires:	rpm-build >= 4.6
@@ -212,11 +213,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/orcus-mso-encryption
 %attr(755,root,root) %{_bindir}/orcus-yaml
 %attr(755,root,root) %{_bindir}/orcus-zip-dump
-%attr(755,root,root) %{_libdir}/liborcus-0.21.so.*.*.*
+%{_libdir}/liborcus-0.21.so.*.*.*
 %ghost %{_libdir}/liborcus-0.21.so.0
-%attr(755,root,root) %{_libdir}/liborcus-mso-0.21.so.*.*.*
+%{_libdir}/liborcus-mso-0.21.so.*.*.*
 %ghost %{_libdir}/liborcus-mso-0.21.so.0
-%attr(755,root,root) %{_libdir}/liborcus-parser-0.21.so.*.*.*
+%{_libdir}/liborcus-parser-0.21.so.*.*.*
 %ghost %{_libdir}/liborcus-parser-0.21.so.0
 
 %files devel
@@ -246,7 +247,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/orcus-xls-xml
 %attr(755,root,root) %{_bindir}/orcus-xlsx
 %attr(755,root,root) %{_bindir}/orcus-xml
-%attr(755,root,root) %{_libdir}/liborcus-spreadsheet-model-0.21.so.*.*.*
+%{_libdir}/liborcus-spreadsheet-model-0.21.so.*.*.*
 %ghost %{_libdir}/liborcus-spreadsheet-model-0.21.so.0
 
 %files spreadsheet-devel
@@ -270,7 +271,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python}
 %files -n python3-orcus
 %defattr(644,root,root,755)
-%attr(755,root,root) %{py3_sitedir}/_orcus.so
-%attr(755,root,root) %{py3_sitedir}/_orcus_json.so
+%{py3_sitedir}/_orcus.so
+%{py3_sitedir}/_orcus_json.so
 %{py3_sitescriptdir}/orcus
 %endif
